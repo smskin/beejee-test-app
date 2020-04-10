@@ -15,4 +15,6 @@ interface IFrameworkService
     public function getDatabaseService(): IDatabaseService;
 
     public function getViewService(): IViewService;
+
+    public function getAuthorizationService(): IAuthorizationService;
 }

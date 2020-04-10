@@ -2,18 +2,20 @@
 
 namespace App\Services\Framework;
 
+use App\Services\Framework\Contracts\IAuthorizationService;
 use App\Services\Framework\Contracts\ICommandService;
 use App\Services\Framework\Contracts\IDatabaseService;
 use App\Services\Framework\Contracts\IFrameworkService;
 use App\Services\Framework\Contracts\IRouteService;
 use App\Services\Framework\Contracts\IViewService;
+use App\Services\Framework\Services\Authorization\AuthorizationService;
 use App\Services\Framework\Services\Command\CommandService;
 use App\Services\Framework\Services\Database\DatabaseService;
 use App\Services\Framework\Services\Route\RouteService;
 use App\Services\Framework\Services\Helper\HelperService as HelperService;
-use App\Services\Framework\Services\Session\SessionService;
 use \App\Services\Framework\Services\View\ViewService as ViewService;
 use Doctrine\ORM\ORMException;
+use Josantonius\Session\Session;
 
 class FrameworkService implements IFrameworkService
 {
@@ -33,23 +35,25 @@ class FrameworkService implements IFrameworkService
     protected $routeService;
 
     /**
-     * @var SessionService
-     */
-    protected $sessionService;
-
-    /**
      * @var ViewService
      */
     protected $viewService;
+
+    /**
+     * @var AuthorizationService
+     */
+    protected $authorizationService;
 
     /**
      * @throws ORMException
      */
     public function boot(): void
     {
+        Session::init();
+
         $this->initHelperService();
         $this->initDatabaseService();
-        $this->initSessionService();
+        $this->initAuthorizationService();
         $this->initViewService();
         $this->initCommandService();
         $this->initRouteService();
@@ -86,9 +90,13 @@ class FrameworkService implements IFrameworkService
         $this->databaseService = new DatabaseService();
     }
 
-    private function initSessionService(): void
+    private function initAuthorizationService(): void
     {
-        $this->sessionService = new SessionService();
+        if (is_cli()) {
+            return;
+        }
+
+        $this->authorizationService = new AuthorizationService();
     }
 
     private function initViewService(): void
@@ -118,6 +126,11 @@ class FrameworkService implements IFrameworkService
     public function getViewService(): IViewService
     {
         return $this->viewService;
+    }
+
+    public function getAuthorizationService(): IAuthorizationService
+    {
+        return $this->authorizationService;
     }
 
     private static $instance;

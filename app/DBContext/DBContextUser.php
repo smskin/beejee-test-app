@@ -60,7 +60,12 @@ class DBContextUser extends Model implements IModel
 
     public function setPassword(string $password): DBContextUser
     {
-        $this->password = $password;
+        $this->password = sha1($password);
         return $this;
+    }
+
+    public function comparePasswords(string $password): bool
+    {
+        return (sha1($password) === $this->password) ? true : false;
     }
 }
