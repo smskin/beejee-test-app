@@ -7,6 +7,7 @@ use App\Commands\Kernel;
 use App\Services\Framework\Contracts\ICommandService;
 use App\Services\Framework\Services\Command\Commands\Command;
 use App\Services\Framework\Services\Command\Commands\CommandsListCommand;
+use App\Services\Framework\Services\Command\Commands\ServeCommand;
 use App\Services\Framework\Services\Command\Commands\TestCommand;
 use Exception;
 
@@ -25,7 +26,8 @@ class CommandService implements ICommandService
             Kernel::$commands,
             [
                 TestCommand::class,
-                CommandsListCommand::class
+                CommandsListCommand::class,
+                ServeCommand::class
             ]
         );
 
