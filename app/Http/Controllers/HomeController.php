@@ -7,7 +7,7 @@ class HomeController extends Controller
 {
     /** @noinspection PhpUnused */
     public function index(){
-        render('home.tpl', [
+        render_view('home.tpl', [
             'a1'=>'dsasdsandsand'
         ]);
     }

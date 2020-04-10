@@ -80,6 +80,7 @@ class FrameworkService implements IFrameworkService
         }
 
         $this->routeService = new RouteService();
+        $this->routeService->boot();
     }
 
     /**

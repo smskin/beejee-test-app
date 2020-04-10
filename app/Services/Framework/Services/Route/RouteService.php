@@ -12,14 +12,19 @@ class RouteService implements IRouteService
      */
     protected $router;
 
-    public function __construct(){
+    public function __construct()
+    {
+        $this->router = new Router();
+    }
+
+    public function boot(): void
+    {
         $this->initHelpers();
         $this->initRouter();
     }
 
     private function initRouter(): void
     {
-        $this->router = new Router();
         /** @noinspection PhpIncludeInspection */
         require_once app_path('routes.php');
 

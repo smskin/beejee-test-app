@@ -41,6 +41,14 @@ class ViewService implements IViewService
      */
     public function render(string $template, array $variables = []): void
     {
+        if (!array_key_exists('title', $variables)){
+            $variables['title'] = 'Page title';
+        }
+
+        if (!array_key_exists('bodyClass',$variables)){
+            $variables['bodyClass'] = '';
+        }
+
         foreach ($variables as $variable => $data){
             $this->smarty->assign($variable, $data);
         }

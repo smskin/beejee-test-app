@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e9b2988da48ef13eeaf72970c0c38d6",
+    "content-hash": "332ec7dca3bf9e301363d7d46def30ab",
     "packages": [
         {
             "name": "bramus/router",
@@ -1062,6 +1062,96 @@
                 "session"
             ],
             "time": "2018-05-04T08:30:19+00:00"
+        },
+        {
+            "name": "lablnet/http-client",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Lablnet/PHP-http-client.git",
+                "reference": "c168ee976dad4fad297aa3d71e35c7047a28775d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Lablnet/PHP-http-client/zipball/c168ee976dad4fad297aa3d71e35c7047a28775d",
+                "reference": "c168ee976dad4fad297aa3d71e35c7047a28775d",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lablnet\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malik Umer Farooq",
+                    "email": "lablnet01@gmail.com",
+                    "homepage": "https://softhub99.com"
+                }
+            ],
+            "description": "PHP http client package.",
+            "keywords": [
+                "Lablnet",
+                "free",
+                "http",
+                "package",
+                "php",
+                "psr-7"
+            ],
+            "time": "2020-02-15T19:21:39+00:00"
+        },
+        {
+            "name": "lablnet/input",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Lablnet/PHP-Input-Class.git",
+                "reference": "8f5165808de89d859a39650c2c97e69b252d82e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Lablnet/PHP-Input-Class/zipball/8f5165808de89d859a39650c2c97e69b252d82e2",
+                "reference": "8f5165808de89d859a39650c2c97e69b252d82e2",
+                "shasum": ""
+            },
+            "require": {
+                "lablnet/http-client": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lablnet\\": "src/"
+                },
+                "files": [
+                    "src/functions/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malik Umer Farooq",
+                    "email": "lablnet01@gmail.com",
+                    "homepage": "https://softhub99.com"
+                }
+            ],
+            "description": "PHP input package.",
+            "keywords": [
+                "Lablnet",
+                "free",
+                "input",
+                "package",
+                "php",
+                "request"
+            ],
+            "time": "2019-02-06T14:36:43+00:00"
         },
         {
             "name": "ocramius/package-versions",

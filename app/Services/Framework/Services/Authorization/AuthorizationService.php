@@ -5,7 +5,7 @@ namespace App\Services\Framework\Services\Authorization;
 
 use App\DBContext\DBContextUser;
 use App\Services\Framework\Contracts\IAuthorizationService;
-use App\Services\Framework\Services\Authorization\Exceptions\AttemptException;
+use App\Services\Framework\Services\View\Exceptions\ValidationException;
 use Josantonius\Session\Session;
 
 class AuthorizationService implements IAuthorizationService
@@ -26,17 +26,25 @@ class AuthorizationService implements IAuthorizationService
     /**
      * @param string $userName
      * @param string $password
-     * @throws AttemptException
+     * @throws ValidationException
      */
     public function attempt(string $userName, string $password): void
     {
         $user = $this->getUserByUserName($userName);
         if (!$user){
-            throw new AttemptException('User not exists');
+            ValidationException::withMessages([
+                'userName'=>[
+                    'User not exists'
+                ]
+            ]);
         }
 
         if (!$user->comparePasswords($password)){
-            throw new AttemptException('Password not correct');
+            ValidationException::withMessages([
+                'password'=>[
+                    'Password not correct'
+                ]
+            ]);
         }
 
         $this->loginByUser($user);

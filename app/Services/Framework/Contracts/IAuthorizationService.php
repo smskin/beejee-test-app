@@ -5,14 +5,14 @@ namespace App\Services\Framework\Contracts;
 
 
 use App\DBContext\DBContextUser;
-use App\Services\Framework\Services\Authorization\Exceptions\AttemptException;
+use App\Services\Framework\Services\View\Exceptions\ValidationException;
 
 interface IAuthorizationService
 {
     /**
      * @param string $userName
      * @param string $password
-     * @throws AttemptException
+     * @throws ValidationException
      */
     public function attempt(string $userName, string $password): void;
     public function loginByUser(DBContextUser $user): void;
