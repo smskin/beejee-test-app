@@ -7,6 +7,7 @@ use App\Commands\Kernel;
 use App\Services\Framework\Contracts\ICommandService;
 use App\Services\Framework\Services\Command\Commands\Command;
 use App\Services\Framework\Services\Command\Commands\CommandsListCommand;
+use App\Services\Framework\Services\Command\Commands\DatabaseSeedCommand;
 use App\Services\Framework\Services\Command\Commands\ServeCommand;
 use Exception;
 
@@ -24,7 +25,8 @@ class CommandService implements ICommandService
             Kernel::$commands,
             [
                 CommandsListCommand::class,
-                ServeCommand::class
+                ServeCommand::class,
+                DatabaseSeedCommand::class
             ]
         );
 
@@ -44,7 +46,8 @@ class CommandService implements ICommandService
     {
         $argv = $_SERVER['argv'];
         if (!isset($argv[1])) {
-            throw new Exception('Command not defined');
+            $this->getClass(CommandsListCommand::$signature)->execute();
+            return;
         }
         $signature = strtolower(trim($argv[1]));
         if (!array_key_exists($signature, $this->commands)) {

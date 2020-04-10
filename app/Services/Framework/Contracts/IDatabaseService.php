@@ -7,4 +7,5 @@ use Doctrine\ORM\EntityManager;
 interface IDatabaseService
 {
     public function getEntityManager(): EntityManager;
+    public function runSeeds(): void;
 }

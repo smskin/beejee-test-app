@@ -4,6 +4,7 @@
 namespace App\Services\Framework\Services\Database;
 
 use App\Services\Framework\Contracts\IDatabaseService;
+use App\Services\Framework\Contracts\ISeed;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
@@ -23,6 +24,27 @@ class DatabaseService implements IDatabaseService
         $this->prepareEntityManager();
     }
 
+    public function runSeeds(): void
+    {
+        foreach (glob(base_path() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'seeds'. DIRECTORY_SEPARATOR. '*.php') as $file) {
+            $class = $this->resolveClass($file);
+            $seed = $this->getSeed($class);
+            $seed->run();
+        }
+    }
+
+    private function getSeed(string $class): ISeed
+    {
+        return new $class;
+    }
+
+    private function resolveClass(string $file): string
+    {
+        /** @noinspection PhpIncludeInspection */
+        require_once $file;
+        $classes = get_declared_classes();
+        return end($classes);
+    }
 
     /**
      * @throws ORMException

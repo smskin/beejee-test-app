@@ -63,6 +63,6 @@ abstract class Model implements IModel
     public static function builder(): QueryBuilder
     {
         $repository = self::getRepository();
-        return $repository->createQueryBuilder('table');
+        return $repository->createQueryBuilder('t');
     }
 }

@@ -27,9 +27,9 @@ class DBContextUser extends Model implements IModel
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="username", type="string", length=255, nullable=false)
      */
-    protected $name;
+    protected $username;
 
     /**
      * @var string
@@ -43,18 +43,18 @@ class DBContextUser extends Model implements IModel
         return $this->id;
     }
 
-    public function getName(): string
+    public function getUserName(): string
     {
-        return $this->name;
+        return $this->username;
     }
 
     /**
-     * @param string $name
+     * @param string $userName
      * @return DBContextUser
      */
-    public function setName(string $name): DBContextUser
+    public function setUserName(string $userName): DBContextUser
     {
-        $this->name = $name;
+        $this->username = $userName;
         return $this;
     }
 
