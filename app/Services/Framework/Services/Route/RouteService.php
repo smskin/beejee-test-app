@@ -12,8 +12,7 @@ class RouteService implements IRouteService
      */
     protected $router;
 
-    public function boot(): void
-    {
+    public function __construct(){
         $this->initHelpers();
         $this->initRouter();
     }
@@ -36,28 +35,5 @@ class RouteService implements IRouteService
     public function getRouter(): Router
     {
         return $this->router;
-    }
-
-    private static $instance;
-
-    final private function __construct()
-    {
-    }
-
-    final private function __clone()
-    {
-    }
-
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    final private function __wakeup()
-    {
-    }
-
-    public static function getInstance(): RouteService
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static();
-        }
-        return self::$instance;
     }
 }

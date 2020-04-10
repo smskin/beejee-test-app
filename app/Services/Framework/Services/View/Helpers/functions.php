@@ -1,7 +1,5 @@
 <?php
 
-use App\Services\Framework\Services\View\ViewService;
-
 if (!function_exists('render')){
     /**
      * @param string $template
@@ -11,7 +9,8 @@ if (!function_exists('render')){
      */
     function render(string $template, array $variables = []): void
     {
+        $viewService = app()->getViewService();
         /** @noinspection PhpUnhandledExceptionInspection */
-        ViewService::getInstance()->render($template, $variables);
+        $viewService->render($template, $variables);
     }
 }

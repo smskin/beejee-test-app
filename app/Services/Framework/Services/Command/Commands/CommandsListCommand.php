@@ -3,7 +3,6 @@
 namespace App\Services\Framework\Services\Command\Commands;
 
 use App\Services\Framework\Contracts\ICommand;
-use App\Services\Framework\Services\Command\CommandService;
 
 class CommandsListCommand extends Command implements ICommand
 {
@@ -12,7 +11,8 @@ class CommandsListCommand extends Command implements ICommand
 
     public function execute(): void
     {
-        $commands = CommandService::getInstance()->getCommands();
+        $commandService = app()->getCommandService();
+        $commands = $commandService->getCommands();
 
         echo 'Available commands:'.PHP_EOL;
         foreach ($commands as $signature => $class){

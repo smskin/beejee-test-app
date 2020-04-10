@@ -6,8 +6,6 @@ use SmartyException;
 
 interface IViewService
 {
-    public function boot(): void;
-
     /**
      * @param string $template
      * @param array $variables

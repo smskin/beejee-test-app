@@ -8,15 +8,13 @@ use App\Services\Framework\Contracts\ICommandService;
 use App\Services\Framework\Services\Command\Commands\Command;
 use App\Services\Framework\Services\Command\Commands\CommandsListCommand;
 use App\Services\Framework\Services\Command\Commands\ServeCommand;
-use App\Services\Framework\Services\Command\Commands\TestCommand;
 use Exception;
 
 class CommandService implements ICommandService
 {
     protected $commands = [];
 
-    public function boot(): void
-    {
+    public function __construct(){
         $this->loadCommands();
     }
 
@@ -25,7 +23,6 @@ class CommandService implements ICommandService
         $commands = array_merge(
             Kernel::$commands,
             [
-                TestCommand::class,
                 CommandsListCommand::class,
                 ServeCommand::class
             ]
@@ -69,28 +66,5 @@ class CommandService implements ICommandService
     public function getCommands(): array
     {
         return $this->commands;
-    }
-
-    private static $instance;
-
-    final private function __construct()
-    {
-    }
-
-    final private function __clone()
-    {
-    }
-
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    final private function __wakeup()
-    {
-    }
-
-    public static function getInstance(): CommandService
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static();
-        }
-        return self::$instance;
     }
 }

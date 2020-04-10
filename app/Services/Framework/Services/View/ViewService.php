@@ -13,8 +13,7 @@ class ViewService implements IViewService
      */
     protected $smarty;
 
-    public function boot(): void
-    {
+    public function __construct(){
         $this->initHelpers();
         $this->initSmarty();
     }
@@ -46,28 +45,5 @@ class ViewService implements IViewService
             $this->smarty->assign($variable, $data);
         }
         $this->smarty->display($template);
-    }
-
-    private static $instance;
-
-    final private function __construct()
-    {
-    }
-
-    final private function __clone()
-    {
-    }
-
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    final private function __wakeup()
-    {
-    }
-
-    public static function getInstance(): ViewService
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static();
-        }
-        return self::$instance;
     }
 }

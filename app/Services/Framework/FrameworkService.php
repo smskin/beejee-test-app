@@ -2,17 +2,54 @@
 
 namespace App\Services\Framework;
 
+use App\Services\Framework\Contracts\ICommandService;
+use App\Services\Framework\Contracts\IDatabaseService;
 use App\Services\Framework\Contracts\IFrameworkService;
-use App\Services\Framework\Services\Command\CommandService as CommandService;
-use App\Services\Framework\Services\Route\RouteService as RouteService;
+use App\Services\Framework\Contracts\IRouteService;
+use App\Services\Framework\Contracts\IViewService;
+use App\Services\Framework\Services\Command\CommandService;
+use App\Services\Framework\Services\Database\DatabaseService;
+use App\Services\Framework\Services\Route\RouteService;
 use App\Services\Framework\Services\Helper\HelperService as HelperService;
+use App\Services\Framework\Services\Session\SessionService;
 use \App\Services\Framework\Services\View\ViewService as ViewService;
+use Doctrine\ORM\ORMException;
 
 class FrameworkService implements IFrameworkService
 {
+    /**
+     * @var CommandService
+     */
+    protected $commandService;
+
+    /**
+     * @var DatabaseService
+     */
+    protected $databaseService;
+
+    /**
+     * @var RouteService
+     */
+    protected $routeService;
+
+    /**
+     * @var SessionService
+     */
+    protected $sessionService;
+
+    /**
+     * @var ViewService
+     */
+    protected $viewService;
+
+    /**
+     * @throws ORMException
+     */
     public function boot(): void
     {
         $this->initHelperService();
+        $this->initDatabaseService();
+        $this->initSessionService();
         $this->initViewService();
         $this->initCommandService();
         $this->initRouteService();
@@ -20,7 +57,7 @@ class FrameworkService implements IFrameworkService
 
     private function initHelperService(): void
     {
-        HelperService::getInstance()->boot();
+        new HelperService();
     }
 
     private function initCommandService(): void
@@ -29,7 +66,7 @@ class FrameworkService implements IFrameworkService
             return;
         }
 
-        CommandService::getInstance()->boot();
+        $this->commandService = new CommandService();
     }
 
     private function initRouteService(): void
@@ -38,7 +75,20 @@ class FrameworkService implements IFrameworkService
             return;
         }
 
-        RouteService::getInstance()->boot();
+        $this->routeService = new RouteService();
+    }
+
+    /**
+     * @throws ORMException
+     */
+    private function initDatabaseService(): void
+    {
+        $this->databaseService = new DatabaseService();
+    }
+
+    private function initSessionService(): void
+    {
+        $this->sessionService = new SessionService();
     }
 
     private function initViewService(): void
@@ -47,17 +97,27 @@ class FrameworkService implements IFrameworkService
             return;
         }
 
-        ViewService::getInstance()->boot();
+        $this->viewService = new ViewService();
     }
 
-    public function getRouteService(): RouteService
+    public function getRouteService(): IRouteService
     {
-        return RouteService::getInstance();
+        return $this->routeService;
     }
 
-    public function getCommandService(): CommandService
+    public function getCommandService(): ICommandService
     {
-        return CommandService::getInstance();
+        return $this->commandService;
+    }
+
+    public function getDatabaseService(): IDatabaseService
+    {
+        return $this->databaseService;
+    }
+
+    public function getViewService(): IViewService
+    {
+        return $this->viewService;
     }
 
     private static $instance;
@@ -75,7 +135,7 @@ class FrameworkService implements IFrameworkService
     {
     }
 
-    public static function getInstance(): FrameworkService
+    public static function getInstance(): IFrameworkService
     {
         if (is_null(self::$instance)) {
             self::$instance = new static();

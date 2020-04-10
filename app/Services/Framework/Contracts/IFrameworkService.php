@@ -2,17 +2,17 @@
 
 namespace App\Services\Framework\Contracts;
 
-use App\Services\Framework\FrameworkService;
-use App\Services\Framework\Services\Command\CommandService as CommandService;
-use App\Services\Framework\Services\Route\RouteService as RouteService;
-
 interface IFrameworkService
 {
     public function boot(): void;
 
-    public static function getInstance(): FrameworkService;
+    public static function getInstance(): IFrameworkService;
 
-    public function getRouteService(): RouteService;
+    public function getRouteService(): IRouteService;
 
-    public function getCommandService(): CommandService;
+    public function getCommandService(): ICommandService;
+
+    public function getDatabaseService(): IDatabaseService;
+
+    public function getViewService(): IViewService;
 }
