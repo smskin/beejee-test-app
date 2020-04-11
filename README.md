@@ -9,29 +9,19 @@
 - ``vendor\bin\doctrine orm:schema-tool:update --force`` - Синхронизировать структуру базы данных с моделями
 ### Структура проекта
 #### Директории
-``/public`` - Домашная директория для Nginx.
-
-``/public/assets`` - Dist директория для webpack
-
-``/resources/assets`` - Исходники JS и стилей
-
-``/resources/views`` - Исходники шаблонов Smarty
-
-``/storage/framework/db/db.sqlite`` - Файл базы данных
-
-``/storage/framework/views/cache``- Кэш объектов Smarty
-
-``/storage/framework/views/compile``- Кэш объектов Smarty
+- ``/public`` - Домашная директория для Nginx.
+- ``/public/assets`` - Dist директория для webpack
+- ``/resources/assets`` - Исходники JS и стилей
+- ``/resources/views`` - Исходники шаблонов Smarty
+- ``/storage/framework/db/db.sqlite`` - Файл базы данных
+- ``/storage/framework/views/cache``- Кэш объектов Smarty
+- ``/storage/framework/views/compile``- Кэш объектов Smarty
 #### Запуск
-``vendor\bin\doctrine orm:schema-tool:create`` - Создаст файл базы данных и создаст в нем структуру базы данных
-
-``npm install`` - Установит зависимости JS
-
-``npm run prod`` - Запустит webpack и соберет необходимые ресурсы
-
-``php cli.php serve`` - Запустит отладочный сервер
-
-``http://localhost:8000`` - Web интерфейс приложения
+- ``vendor\bin\doctrine orm:schema-tool:create`` - Создаст файл базы данных и создаст в нем структуру базы данных
+- ``npm install`` - Установит зависимости JS
+- ``npm run prod`` - Запустит webpack и соберет необходимые ресурсы
+- ``php cli.php serve`` - Запустит отладочный сервер
+- ``http://localhost:8000`` - Web интерфейс приложения
 ## Задание
 Как договаривались, отправляю Вам тестовое задание. Пожалуйста, подтвердите, что Вы получили это письмо.
 
