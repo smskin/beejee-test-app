@@ -4,9 +4,9 @@
 - ``php cli.php`` - Просмотреть список доступных команд
 - ``php cli.php serve`` - Запуск отладочного сервера
 - ``php cli.php database:seed`` - Импорт тестовых данных в базу данных
-- ``vendor\bin\doctrine orm:schema-tool:create`` - Создание структуры базы данных на основе моделей (Doctrine)
-- ``vendor\bin\doctrine orm:schema-tool:drop --force`` - Очистить базу данных (Doctrine)
-- ``vendor\bin\doctrine orm:schema-tool:update --force`` - Синхронизировать структуру базы данных с моделями
+- ``vendor/bin/doctrine orm:schema-tool:create`` - Создание структуры базы данных на основе моделей (Doctrine)
+- ``vendor/bin/doctrine orm:schema-tool:drop --force`` - Очистить базу данных (Doctrine)
+- ``vendor/bin/doctrine orm:schema-tool:update --force`` - Синхронизировать структуру базы данных с моделями
 ### Структура проекта
 #### Директории
 - ``/public`` - Домашная директория для Nginx.
@@ -17,7 +17,7 @@
 - ``/storage/framework/views/cache``- Кэш объектов Smarty
 - ``/storage/framework/views/compile``- Кэш объектов Smarty
 #### Запуск
-- ``vendor\bin\doctrine orm:schema-tool:create`` - Создаст файл базы данных и создаст в нем структуру базы данных
+- ``vendor/bin/doctrine orm:schema-tool:create`` - Создаст файл базы данных и создаст в нем структуру базы данных
 - ``php cli.php database:seed``- Импортирует в базу данных тестовые данные
 - ``npm install`` - Установит зависимости JS
 - ``npm run prod`` - Запустит webpack и соберет необходимые ресурсы

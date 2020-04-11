@@ -108,6 +108,7 @@ class TaskService implements ITaskService
         $context->setEmail($email);
         $context->setText($text);
         $context->setClosedStatus(false);
+        $context->setEditedByAdminStatus(false);
         $context->save();
         return $context;
     }
