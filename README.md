@@ -18,6 +18,7 @@
 - ``/storage/framework/views/compile``- Кэш объектов Smarty
 #### Запуск
 - ``vendor\bin\doctrine orm:schema-tool:create`` - Создаст файл базы данных и создаст в нем структуру базы данных
+- ``php cli.php database:seed``- Импортирует в базу данных тестовые данные
 - ``npm install`` - Установит зависимости JS
 - ``npm run prod`` - Запустит webpack и соберет необходимые ресурсы
 - ``php cli.php serve`` - Запустит отладочный сервер

@@ -1,0 +1,74 @@
+version: '2'
+services:
+  console:
+    build:
+      context: ./console
+      args:
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
+        - TZ=${TZ}
+    stdin_open: true
+    tty: true
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    networks:
+      - local
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
+        - TZ=${TZ}
+    ports:
+      - ${NGINX_HOST}:${NGINX_HOST_PORT}:80
+    restart: always
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST
+    labels:
+      - traefik.enable=true
+      - traefik.domain=${VIRTUAL_HOST}
+      - traefik.backend=${TRAEFIK_BACKEND_ALIAS}
+      - traefik.docker.network=webproxy
+      - traefik.frontend.entryPoints=http,https
+      - traefik.port=80
+      - traefix.port=443
+      - traefik.frontend.rule=Host:${VIRTUAL_HOST}
+      - traefik.frontend.headers.SSLRedirect=true
+      - traefik.frontend.headers.SSLHost=${VIRTUAL_HOST}
+      - traefik.frontend.headers.SSLForceHost=true
+      - traefik.weight=1
+    depends_on:
+      - php-fpm
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${DATA_PATH_HOST}/nginx/logs:/var/log/nginx
+      - sockets:/sockets
+    links:
+      - php-fpm
+    networks:
+      - local
+  php-fpm:
+    build:
+      context: ./php-fpm
+      args:
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
+        - TZ=${TZ}
+    restart: always
+    environment:
+      - XDEBUG
+    volumes_from:
+      - console
+    volumes:
+    - sockets:/sockets
+    depends_on:
+      - console
+    labels:
+      - traefik.enable=false
+    networks:
+      - local
+volumes:
+  sockets:
+networks:
+  local:
+    driver: bridge
