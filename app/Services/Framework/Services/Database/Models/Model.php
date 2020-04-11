@@ -3,14 +3,13 @@
 
 namespace App\Services\Framework\Services\Database\Models;
 
-use App\Services\Framework\Contracts\IModel;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 
-abstract class Model implements IModel
+abstract class Model
 {
     private static function getManager(): EntityManager
     {
@@ -21,7 +20,7 @@ abstract class Model implements IModel
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save(): IModel
+    public function save(): self
     {
         $manager = $this->getManager();
         $manager->persist($this);
@@ -30,11 +29,11 @@ abstract class Model implements IModel
     }
 
     /**
-     * @return IModel
+     * @return self
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function flush(): IModel
+    public function flush(): self
     {
         $manager = $this->getManager();
         $manager->flush();
@@ -53,7 +52,7 @@ abstract class Model implements IModel
         return $repository->findAll();
     }
 
-    public static function find(int $id): ?IModel
+    public static function find(int $id): ?self
     {
         $repository = self::getRepository();
         /** @noinspection PhpIncompatibleReturnTypeInspection */

@@ -24,13 +24,13 @@ class ViewService implements IViewService
         $smarty->setTemplateDir(base_path().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR);
         $smarty->setCompileDir(base_path().DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'compile'.DIRECTORY_SEPARATOR);
         $smarty->setCacheDir(base_path().DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR);
-        $smarty->setCaching(true);
+        $smarty->setCaching(1);
         $this->smarty = $smarty;
     }
 
     private function initHelpers(): void
     {
-        require_once 'Helpers/functions.php';
+        require_once __DIR__.DIRECTORY_SEPARATOR.'Helpers'.DIRECTORY_SEPARATOR.'functions.php';
     }
 
     /**

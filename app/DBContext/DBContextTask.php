@@ -2,7 +2,6 @@
 
 namespace App\DBContext;
 
-use App\Services\Framework\Contracts\IModel;
 use App\Services\Framework\Services\Database\Models\Model;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tasks")
  * @ORM\Entity
  */
-class DBContextTask extends Model implements IModel
+class DBContextTask extends Model
 {
     /**
      * @var integer
@@ -46,14 +45,14 @@ class DBContextTask extends Model implements IModel
     protected $text;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="is_closed", type="smallint", nullable=false, options={"default" : 0})
      */
     protected $is_closed;
 
     /**
-     * @var bool
+     * @var int
      *
      * @ORM\Column(name="is_edited_by_admin", type="smallint", nullable=false, options={"default" : 0})
      */

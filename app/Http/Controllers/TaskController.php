@@ -118,14 +118,12 @@ class TaskController extends Controller
            }
 
            $service = TaskService::getInstance();
-           /** @noinspection PhpParamsInspection */
            $service->update(
                $task,
                $text,
                $isClosed
            );
 
-           /** @noinspection PhpParamsInspection */
            render_json((new TaskModel())->fill($task));
        } catch (Exception $exception){
            render_exception($exception);

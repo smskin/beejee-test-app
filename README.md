@@ -7,6 +7,12 @@
 - ``vendor/bin/doctrine orm:schema-tool:create`` - Создание структуры базы данных на основе моделей (Doctrine)
 - ``vendor/bin/doctrine orm:schema-tool:drop --force`` - Очистить базу данных (Doctrine)
 - ``vendor/bin/doctrine orm:schema-tool:update --force`` - Синхронизировать структуру базы данных с моделями
+- ``vendor/bin/phpstan analyse`` - Анализ кода средствами PHPStan
+### Работа с Docker
+- ``cd docker``
+- ``cp env-example .env`` - Скопируйте файл env-example в .env. Это файл конфигурации.
+- ``docker-compose up`` - Развернет окружение. Приложение будет доступно по адресу http://{NGINX_HOST}:NGINX_PORT
+- ``docker-compose exec console bash`` - Для запуска Bash в CLI контейнере
 ### Структура проекта
 #### Директории
 - ``/public`` - Домашная директория для Nginx.

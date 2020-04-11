@@ -34,7 +34,7 @@ class RouteService implements IRouteService
 
     private function initHelpers(): void
     {
-        require_once 'Helpers/functions.php';
+        require_once __DIR__.DIRECTORY_SEPARATOR.'Helpers'.DIRECTORY_SEPARATOR.'functions.php';
     }
 
     public function getRouter(): Router

@@ -1,0 +1,21 @@
+parameters:
+	level: 5
+	inferPrivatePropertyTypeFromConstructor: true
+	autoload_directories:
+	    - app/Helpers
+	autoload_files:
+	    - app/Helpers/TestHelper.php
+	    - app/Services/Framework/Services/Authorization/Helpers/functions.php
+	    - app/Services/Framework/Services/Helper/Helpers/instance.php
+	    - app/Services/Framework/Services/Helper/Helpers/path.php
+	    - app/Services/Framework/Services/Helper/Helpers/utilities.php
+	    - app/Services/Framework/Services/Route/Helpers/functions.php
+	    - app/Services/Framework/Services/View/Helpers/functions.php
+	paths:
+		- app
+	doctrine:
+	    repositoryClass: App\DBContext
+	ignoreErrors:
+	    - '#Parameter \#[\d]+ [$a-zA-Z0-9]+ of method [a-zA-Z0-9\\_]+::[a-zA-Z0-9()]+ expects [a-zA-Z0-9\\_]+, App\\Services\\Framework\\Services\\Database\\Models\\Model\|null given\.#'
+	    - '#Method App\\Services\\Framework\\Services\\Database\\Models\\Model::getRepository\(\) should return Doctrine\\ORM\\EntityRepository but returns App\\DBContext<static\(App\\Services\\Framework\\Services\\Database\\Models\\Model\)>#'
+	    - '#Parameter \#2 \$fn of method Bramus\\Router\\Router::[a-zA-Z0-9]+\(\) expects \(callable\(\):.*#'

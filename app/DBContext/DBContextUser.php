@@ -2,7 +2,6 @@
 
 namespace App\DBContext;
 
-use App\Services\Framework\Contracts\IModel;
 use App\Services\Framework\Services\Database\Models\Model;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class DBContextUser extends Model implements IModel
+class DBContextUser extends Model
 {
     /**
      * @var integer

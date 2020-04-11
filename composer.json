@@ -21,9 +21,15 @@
   "autoload": {
     "psr-4": {
       "App\\": "app"
-    }
+    },
+    "classmap": [
+      "database/seeds"
+    ]
   },
   "require-dev": {
-    "symfony/var-dumper": "^5.0"
+    "symfony/var-dumper": "^5.0",
+    "phpstan/phpstan": "^0.12.18",
+    "phpstan/phpstan-doctrine": "^0.12.10",
+    "phpstan/extension-installer": "^1.0"
   }
 }

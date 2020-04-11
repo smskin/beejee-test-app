@@ -75,6 +75,7 @@
         },
         methods: {
             showModal: function(){
+                this.fillData();
                 this.$refs.modal.show();
             },
             closeModal: function(){

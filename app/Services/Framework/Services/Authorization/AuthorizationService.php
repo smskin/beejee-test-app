@@ -13,7 +13,7 @@ class AuthorizationService implements IAuthorizationService
     protected const AUTH_SESSION_KEY = 'user_id';
 
     /**
-     * @var DBContextUser
+     * @var DBContextUser|null
      */
     public $user;
 
@@ -61,7 +61,6 @@ class AuthorizationService implements IAuthorizationService
         if (!$user){
             Session::destroy(self::AUTH_SESSION_KEY);
         }
-        /** @noinspection PhpParamsInspection */
         $this->loginByUser($user);
     }
 
@@ -102,6 +101,6 @@ class AuthorizationService implements IAuthorizationService
 
     private function initHelpers()
     {
-        require_once 'Helpers/functions.php';
+        require_once __DIR__.DIRECTORY_SEPARATOR.'Helpers'.DIRECTORY_SEPARATOR.'functions.php';
     }
 }
