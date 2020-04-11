@@ -19,7 +19,6 @@ class RouteService implements IRouteService
 
     public function boot(): void
     {
-        $this->initHelpers();
         $this->initRouter();
     }
 
@@ -30,11 +29,6 @@ class RouteService implements IRouteService
 
         $this->router->setNamespace('App\\Http\\Controllers');
         $this->router->run();
-    }
-
-    private function initHelpers(): void
-    {
-        require_once __DIR__.DIRECTORY_SEPARATOR.'Helpers'.DIRECTORY_SEPARATOR.'functions.php';
     }
 
     public function getRouter(): Router

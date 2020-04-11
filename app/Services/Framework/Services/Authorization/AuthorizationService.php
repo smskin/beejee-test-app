@@ -20,7 +20,6 @@ class AuthorizationService implements IAuthorizationService
     public function __construct()
     {
         $this->authBySession();
-        $this->initHelpers();
     }
 
     /**
@@ -97,10 +96,5 @@ class AuthorizationService implements IAuthorizationService
             return null;
         }
         return $query[0];
-    }
-
-    private function initHelpers()
-    {
-        require_once __DIR__.DIRECTORY_SEPARATOR.'Helpers'.DIRECTORY_SEPARATOR.'functions.php';
     }
 }

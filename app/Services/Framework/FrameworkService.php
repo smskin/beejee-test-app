@@ -12,7 +12,6 @@ use App\Services\Framework\Services\Authorization\AuthorizationService;
 use App\Services\Framework\Services\Command\CommandService;
 use App\Services\Framework\Services\Database\DatabaseService;
 use App\Services\Framework\Services\Route\RouteService;
-use App\Services\Framework\Services\Helper\HelperService as HelperService;
 use \App\Services\Framework\Services\View\ViewService as ViewService;
 use Doctrine\ORM\ORMException;
 use Josantonius\Session\Session;
@@ -51,17 +50,11 @@ class FrameworkService implements IFrameworkService
     {
         Session::init();
 
-        $this->initHelperService();
         $this->initDatabaseService();
         $this->initAuthorizationService();
         $this->initViewService();
         $this->initCommandService();
         $this->initRouteService();
-    }
-
-    private function initHelperService(): void
-    {
-        new HelperService();
     }
 
     private function initCommandService(): void

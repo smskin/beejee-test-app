@@ -3,6 +3,7 @@
 
 namespace App\Services\Framework\Services\Database;
 
+use App\Seeds\Kernel;
 use App\Services\Framework\Contracts\IDatabaseService;
 use App\Services\Framework\Contracts\ISeed;
 use Doctrine\ORM\EntityManager;
@@ -26,8 +27,8 @@ class DatabaseService implements IDatabaseService
 
     public function runSeeds(): void
     {
-        foreach (glob(base_path() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'seeds'. DIRECTORY_SEPARATOR. '*.php') as $file) {
-            $class = $this->resolveClass($file);
+        $seeds = Kernel::$seeds;
+        foreach ($seeds as $class){
             $seed = $this->getSeed($class);
             $seed->run();
         }
@@ -36,14 +37,6 @@ class DatabaseService implements IDatabaseService
     private function getSeed(string $class): ISeed
     {
         return new $class;
-    }
-
-    private function resolveClass(string $file): string
-    {
-        /** @noinspection PhpIncludeInspection */
-        require_once $file;
-        $classes = get_declared_classes();
-        return end($classes);
     }
 
     /**
@@ -56,13 +49,13 @@ class DatabaseService implements IDatabaseService
         $cache = null;
         $useSimpleAnnotationReader = false;
         $paths = [
-            app_path().DIRECTORY_SEPARATOR.'DBContext'
+            app_path('DBContext')
         ];
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
         $conn = array(
             'driver' => 'pdo_sqlite',
-            'path' => base_path().DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'db'. DIRECTORY_SEPARATOR. 'db.sqlite',
+            'path' => fix_path(base_path().'/storage/framework/db/db.sqlite'),
         );
         $this->entityManager = EntityManager::create($conn, $config);
     }

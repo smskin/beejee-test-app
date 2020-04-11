@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Seeds;
+
 use App\DBContext\DBContextUser;
 use App\Services\Framework\Contracts\ISeed;
 use App\Services\Framework\Services\Database\Models\Seed;
@@ -8,7 +10,6 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
-/** @noinspection PhpUnused */
 class UserTableSeed extends Seed implements ISeed
 {
     /**

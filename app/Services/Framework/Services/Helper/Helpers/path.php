@@ -7,9 +7,18 @@ if (!function_exists('base_path')) {
     }
 }
 
+if (!function_exists('fix_path')){
+    function fix_path(string $path = ''): string
+    {
+        /** @noinspection RegExpRedundantEscape */
+        return preg_replace('/([\\]|[\/])/i', DIRECTORY_SEPARATOR, $path);
+    }
+}
+
 if (!function_exists('app_path')) {
     function app_path(string $path = '')
     {
-        return base_path() . DIRECTORY_SEPARATOR . 'app' . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : $path);
+        $result = base_path(). '/app/' . ($path ? ltrim($path, '/') : $path);
+        return fix_path($result);
     }
 }
