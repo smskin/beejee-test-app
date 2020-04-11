@@ -52,6 +52,13 @@ class DBContextTask extends Model implements IModel
      */
     protected $is_closed;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_edited_by_admin", type="smallint", nullable=false, options={"default" : 0})
+     */
+    protected $is_edited_by_admin;
+
     public function getId(): int
     {
         return $this->id;
@@ -98,6 +105,17 @@ class DBContextTask extends Model implements IModel
     public function setClosedStatus(bool $state): DBContextTask
     {
         $this->is_closed = ($state === true) ? 1 : 0;
+        return $this;
+    }
+
+    public function isEditedByAdmin(): bool
+    {
+        return boolval($this->is_edited_by_admin);
+    }
+
+    public function setEditedByAdminStatus(bool $state): DBContextTask
+    {
+        $this->is_edited_by_admin = ($state === true) ? 1 : 0;
         return $this;
     }
 }

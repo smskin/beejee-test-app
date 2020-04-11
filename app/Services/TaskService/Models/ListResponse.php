@@ -29,4 +29,14 @@ class ListResponse
      * @var int
      */
     public $count;
+
+    /**
+     * @var int
+     */
+    public $page;
+
+    /**
+     * @var int
+     */
+    public $pages;
 }

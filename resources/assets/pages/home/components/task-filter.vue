@@ -1,25 +1,36 @@
 <template>
-    <div class="form-group">
-        <label>Фильтрация</label>
-        <!--suppress HtmlFormInputWithoutLabel -->
-        <select v-model="model">
-            <option v-for="option in options" :value="option.value">{{ option.text }}</option>
-        </select>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <select class="custom-select" v-model="mFilter">
+                <option v-for="option in filterOptions" :value="option.value">{{ option.text }}</option>
+            </select>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <select class="custom-select" v-model="mFilterDirect">
+                <option v-for="option in directOptions" :value="option.value">{{ option.text }}</option>
+            </select>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         props: {
-            value: {
+            filter: {
                 type: String,
                 default: 'userName'
+            },
+            filterDirect: {
+                type: String,
+                default: 'asc'
             }
         },
         data: function(){
             return {
-                model: '',
-                options: [
+                mFilter: 'userName',
+                filterOptions: [
                     {
                         value: 'userName',
                         text: 'По имени пользователя'
@@ -32,19 +43,45 @@
                         value: 'status',
                         text: 'По статусу'
                     }
+                ],
+                mFilterDirect: 'asc',
+                directOptions: [
+                    {
+                        value: 'asc',
+                        text: 'По возрастанию'
+                    },
+                    {
+                        value: 'desc',
+                        text: 'По убыванию'
+                    },
                 ]
             }
         },
         watch: {
-            model: function(value){
-                this.$emit('input', value);
+            mFilter: function(){
+               this.emitModel();
             },
-            value: function(value){
-                this.model = value;
+            mFilterDirect: function(){
+                this.emitModel();
+            },
+            filter: function(value){
+                this.mFilter = value;
+            },
+            filterDirect: function(value){
+                this.mFilterDirect = value;
+            }
+        },
+        methods: {
+            emitModel(){
+                this.$emit('input', {
+                    filter: this.mFilter,
+                    filterDirect: this.mFilterDirect
+                })
             }
         },
         mounted() {
-            this.model = this.value;
+           this.mFilter = this.filter;
+           this.mFilterDirect = this.filterDirect;
         }
     }
 </script>

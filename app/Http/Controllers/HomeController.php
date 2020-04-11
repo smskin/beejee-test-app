@@ -8,7 +8,7 @@ class HomeController extends Controller
     /** @noinspection PhpUnused */
     public function index(){
         render_view('home.tpl', [
-            'a1'=>'dsasdsandsand'
+            'title'=>'Tasks list'
         ]);
     }
 }

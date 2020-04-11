@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DBContext\DBContextTask;
 use App\Services\Framework\Services\View\Exceptions\ValidationException;
 use App\Services\TaskService\Models\TaskModel;
 use App\Services\TaskService\TaskService;
@@ -14,6 +15,7 @@ class TaskController extends Controller
         $limit = (int) input('limit');
         $page = (int) input('page');
         $filter = escape(input('filter'));
+        $filterDirect = escape(input('filterDirect'));
 
         if (!$page){
             $page = 1;
@@ -27,9 +29,13 @@ class TaskController extends Controller
             $filter = 'userName';
         }
 
+        if (!$filterDirect){
+            $filterDirect = 'asc';
+        }
+
         try {
             $service = TaskService::getInstance();
-            render_json($service->getList($limit, $page, $filter));
+            render_json($service->getList($limit, $page, $filter, $filterDirect));
         } catch (Exception $exception){
             render_exception($exception);
         }
@@ -38,7 +44,7 @@ class TaskController extends Controller
     public function store(){
         $userName = escape(input('userName'));
         $email = escape(input('email'));
-        $text = escape(input('text'));
+        $text = restore_line_break(escape(input('text')));
 
         try {
             if (!$userName){
@@ -81,8 +87,48 @@ class TaskController extends Controller
             );
 
             render_json((new TaskModel())->fill($task));
-        } catch (ValidationException $exception){
+        } catch (Exception $exception){
             render_exception($exception);
         }
+    }
+
+    /**
+     * @param int $taskId
+     */
+    public function update(int $taskId){
+        if (!auth()->check()){
+            abort(401);
+        }
+
+        $text = restore_line_break(escape(input('text')));
+        $isClosed = boolval(input('isClosed'));
+
+       try {
+           if (!$text){
+               ValidationException::withMessages([
+                   'text'=>[
+                       'Text is required'
+                   ]
+               ]);
+           }
+
+           $task = DBContextTask::find($taskId);
+           if (!$task){
+               abort(404);
+           }
+
+           $service = TaskService::getInstance();
+           /** @noinspection PhpParamsInspection */
+           $service->update(
+               $task,
+               $text,
+               $isClosed
+           );
+
+           /** @noinspection PhpParamsInspection */
+           render_json((new TaskModel())->fill($task));
+       } catch (Exception $exception){
+           render_exception($exception);
+       }
     }
 }

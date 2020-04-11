@@ -18,4 +18,5 @@ interface IAuthorizationService
     public function loginByUser(DBContextUser $user): void;
     public function check(): bool;
     public function getUser(): ?DBContextUser;
+    public function logout(): void;
 }

@@ -20,16 +20,20 @@ class TaskService implements ITaskService
     public const FILTER_EMAIL = 'email';
     public const FILTER_STATUS = 'status';
 
+    public const FILTER_DIRECT_ASC = 'asc';
+    public const FILTER_DIRECT_DESC = 'desc';
+
     /**
      * @param int $limit
      * @param int $page
      * @param string $filter
+     * @param string $filterDirect
      * @return ListResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
      * @throws ValidationException
      */
-    public function getList(int $limit, int $page, string $filter): ListResponse
+    public function getList(int $limit, int $page, string $filter, string $filterDirect): ListResponse
     {
         if (!in_array($filter,[
             self::FILTER_EMAIL,
@@ -43,19 +47,30 @@ class TaskService implements ITaskService
             ]);
         }
 
+        if (!in_array($filterDirect,[
+            self::FILTER_DIRECT_ASC,
+            self::FILTER_DIRECT_DESC
+        ])){
+            ValidationException::withMessages([
+                'filterDirect'=>[
+                    'Filter direct not exists'
+                ]
+            ]);
+        }
+
         $offset = $page*$limit-$limit;
         $tasks = DBContextTask::builder()
             ->setFirstResult($offset)
             ->setMaxResults($limit);
         switch ($filter){
             case self::FILTER_EMAIL:
-                $tasks->orderBy('t.email', 'ASC');
+                $tasks->orderBy('t.email', $filterDirect);
                 break;
             case self::FILTER_STATUS:
-                $tasks->orderBy('t.is_closed', 'ASC');
+                $tasks->orderBy('t.is_closed', $filterDirect);
                 break;
             case self::FILTER_USER_NAME:
-                $tasks->orderBy('t.username', 'ASC');
+                $tasks->orderBy('t.username', $filterDirect);
                 break;
         }
 
@@ -64,12 +79,17 @@ class TaskService implements ITaskService
             $data[] = (new TaskModel())->fill($task);
         }
 
+        $total =  $this->getTasksCount();
+        $pages = (int) ceil( $total / $limit);
+
         $response = new ListResponse;
         $response->tasks = $data;
         $response->total = $this->getTasksCount();
         $response->limit = $limit;
         $response->offset = $offset;
         $response->count = count($data);
+        $response->page = $page;
+        $response->pages = $pages;
         return $response;
     }
 
@@ -90,6 +110,23 @@ class TaskService implements ITaskService
         $context->setClosedStatus(false);
         $context->save();
         return $context;
+    }
+
+    /**
+     * @param DBContextTask $task
+     * @param string $text
+     * @param bool $isClosed
+     * @return DBContextTask
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(DBContextTask $task, string $text, bool $isClosed): DBContextTask
+    {
+        $task->setText($text);
+        $task->setClosedStatus($isClosed);
+        $task->setEditedByAdminStatus(true);
+        $task->save();
+        return $task;
     }
 
     /**

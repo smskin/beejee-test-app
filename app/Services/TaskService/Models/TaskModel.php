@@ -32,6 +32,11 @@ class TaskModel
      */
     public $isClosed;
 
+    /**
+     * @var bool
+     */
+    public $isEditedByAdmin;
+
     public function fill(DBContextTask $task): TaskModel
     {
         $this->id = $task->getId();
@@ -39,6 +44,7 @@ class TaskModel
         $this->email = $task->getEmail();
         $this->text = $task->getText();
         $this->isClosed = $task->isClosed();
+        $this->isEditedByAdmin = $task->isEditedByAdmin();
         return $this;
     }
 }

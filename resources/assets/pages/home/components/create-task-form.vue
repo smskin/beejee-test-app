@@ -16,14 +16,13 @@
             </div>
             <div class="form-group">
                 <label>E-mail</label>
-                <validation-provider vid="email" name="E-mail" v-slot="{ errors, classes }" rules="required" tag="div" slim>
+                <validation-provider vid="email" name="E-mail" v-slot="{ errors, classes }" rules="required|email" tag="div" slim>
                     <!--suppress HtmlFormInputWithoutLabel -->
                     <input
                             v-model="email"
                             class="form-control"
                             placeholder="E-mail"
-                            :class="classes"
-                            autofocus>
+                            :class="classes">
                     <span class="invalid-feedback" role="alert">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -35,8 +34,7 @@
                             v-model="text"
                             class="form-control"
                             placeholder="Текст задачи"
-                            :class="classes"
-                            autofocus></textarea>
+                            :class="classes"></textarea>
                     <span class="invalid-feedback" role="alert">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -64,12 +62,22 @@
             },
             onSubmit: function(){
                 this.$http.post(
-                    '/tasks',
+                    '/api/tasks',
                     this.prepareData()
                 ).then((response) => {
-                    this.$emit('task-created', response.data)
+                    this.$emit('task-created', response.data);
+                    this.showToast();
+                    this.userName = '';
+                    this.email = '';
+                    this.text = '';
                 }).catch(err => {
                     this.$refs.form.setErrors(err.response.data.errors);
+                })
+            },
+            showToast(){
+                this.$bvToast.toast(`Задача успешно добавлена`, {
+                    title: 'Успех',
+                    autoHideDelay: 5000
                 })
             }
         }

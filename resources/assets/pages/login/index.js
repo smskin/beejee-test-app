@@ -18,7 +18,7 @@ Promise.all([
             },
             onSubmit: function(){
                 this.$http.post(
-                    '/login',
+                    '/api/auth/login',
                     this.prepareData()
                 ).then(() => {
                     window.location.href = '/'

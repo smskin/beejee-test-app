@@ -81,6 +81,12 @@ class AuthorizationService implements IAuthorizationService
         return $this->user;
     }
 
+    public function logout(): void
+    {
+        Session::destroy(self::AUTH_SESSION_KEY);
+        $this->user = null;
+    }
+
     private function getUserByUserName(string $userName): ?DBContextUser
     {
         $query = DBContextUser::builder()

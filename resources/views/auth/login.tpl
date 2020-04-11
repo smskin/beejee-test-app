@@ -30,8 +30,7 @@
                             v-model="password"
                             class="form-control"
                             placeholder="Пароль"
-                            :class="classes"
-                            autofocus>
+                            :class="classes">
                     {literal}
                         <span class="invalid-feedback" role="alert">{{ errors[0] }}</span>
                     {/literal}

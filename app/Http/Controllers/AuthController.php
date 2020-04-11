@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\AuthStatus;
 use App\Services\Framework\Services\View\Exceptions\ValidationException;
 
 /** @noinspection PhpUnused */
@@ -31,5 +32,20 @@ class AuthController extends Controller
         } catch (ValidationException $exception){
             render_exception($exception);
         }
+    }
+
+    public function status(){
+        $response = new AuthStatus();
+        $response->authorized = auth()->check();
+
+        render_json($response);
+    }
+
+    public function logout(){
+        if (!auth()->check()){
+            abort(401);
+        }
+
+        auth()->logout();
     }
 }
