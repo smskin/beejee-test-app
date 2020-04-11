@@ -4,7 +4,7 @@
            <div v-bind:class="{'col-lg-10 col-sm-12': isAuthorized, 'col-12': isGuest}">
                Имя пользователя: {{ task.userName }}<br />
                E-mail: {{ task.email }}<br />
-               Текст задачи: <span class="pre-formatted" v-html="task.text"></span><br />
+               Текст задачи: <span class="pre-formatted">{{ task.text }}</span><br />
                Статус: {{ status }}
                <span class="d-block" v-if="task.isEditedByAdmin">Отредактировано администратором</span>
            </div>

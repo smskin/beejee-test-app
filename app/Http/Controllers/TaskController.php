@@ -44,7 +44,7 @@ class TaskController extends Controller
     public function store(){
         $userName = escape(input('userName'));
         $email = escape(input('email'));
-        $text = restore_line_break(escape(input('text')));
+        $text = input('text');
 
         try {
             if (!$userName){
@@ -100,7 +100,7 @@ class TaskController extends Controller
             abort(401);
         }
 
-        $text = restore_line_break(escape(input('text')));
+        $text = input('text');
         $isClosed = boolval(input('isClosed'));
 
        try {

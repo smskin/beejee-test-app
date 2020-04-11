@@ -123,9 +123,11 @@ class TaskService implements ITaskService
      */
     public function update(DBContextTask $task, string $text, bool $isClosed): DBContextTask
     {
+        if ($task->getText() !== $text){
+            $task->setEditedByAdminStatus(true);
+        }
         $task->setText($text);
         $task->setClosedStatus($isClosed);
-        $task->setEditedByAdminStatus(true);
         $task->save();
         return $task;
     }
